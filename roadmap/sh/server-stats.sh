@@ -70,6 +70,9 @@ memory_usage() {
 }
 
 # Total disk usage (Free vs Used including percentage)
+# use cpu_usage with argument to get top N processes by CPU usage
+
+# Top 5 processes by memory usage
 disk_usage() {
   echo "******************"
   echo "*** DISK USAGE ***"
@@ -91,8 +94,6 @@ top_mem() {
 
   printf "\n\n"
 }
-
-# Top 5 processes by memory usage
 
 cpu_usage
 memory_usage
