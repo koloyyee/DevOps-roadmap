@@ -1,7 +1,17 @@
 #! /usr/bin/env bash
+echo "**************************"
+echo "*** System Uptime Info ***"
+echo "**************************"
+
+uptime
+
+printf "\n\n"
 
 # Total CPU usage
 cpu_usage() {
+  echo "*****************"
+  echo "*** CPU USAGE ***"
+  echo "*****************"
   # With fallback version.
   # local lines=${1:-10} # default value of 10
 
@@ -25,6 +35,9 @@ cpu_usage() {
 
 # Total memory usage (Free vs Used including percentage)
 memory_usage() {
+  echo "*****************"
+  echo "*** MEM USAGE ***"
+  echo "*****************"
   local lines=$1
   local os=$(uname)
 
@@ -58,12 +71,19 @@ memory_usage() {
 
 # Total disk usage (Free vs Used including percentage)
 disk_usage() {
+  echo "******************"
+  echo "*** DISK USAGE ***"
+  echo "******************"
   df -ah
   printf "\n\n"
 }
 
 # Top 5 processes by CPU usage
 top_mem() {
+  echo "**************************"
+  echo "*** TOP 5 MEMORY USAGE***"
+  echo "**************************"
+
   local lines=${1:-5}
 
   ps -axo pid,comm,%mem | awk 'NR==1'
