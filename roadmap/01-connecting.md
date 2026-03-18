@@ -127,6 +127,8 @@ sudo systemctl restart fail2ban
 sudo systemctl enable fail2ban
 ```
 
+---
+
 ### Test fail2ban
 
 To test Fail2Ban, you need to "attack" your own server. However, since you added your IP to the `ignoreip` list, Fail2Ban is currently ignoring your "attacks."
@@ -149,7 +151,7 @@ Save and exit (`Ctrl+O`, `Enter`, `Ctrl+X`), then reload:
 Open a **new** terminal tab on your Mac. Try to SSH into your server using a **fake username** several times. This forces a failure.
 
 Run this 3 or 4 times (or whatever your `maxretry` count is):
-`ssh non-existent-user@100.81.83.86`
+`ssh non-existent-user@<ip_address>`
 
 On the last attempt, the terminal should hang or say `Connection refused`. **Congratulations, you are now in "prison."**
 
@@ -170,10 +172,8 @@ You should see `1` under "Currently banned" and your Mac's Tailscale IP listed a
 Don't wait for the timer to expire. Run this command on the server to let yourself back in:
 
 ```bash
-sudo fail2ban-client set sshd unbanip 100.x.y.z
+sudo fail2ban-client set sshd unbanip <ip_address>
 ```
-
-_(Replace `100.x.y.z` with your Mac's Tailscale IP.)_
 
 ---
 
@@ -184,10 +184,3 @@ Don't forget to put your whitelist back so you don't accidentally ban yourself w
 1. `sudo nano /etc/fail2ban/jail.local`
 2. Remove the `#` from the `ignoreip` line.
 3. `sudo fail2ban-client reload`
-
-### Pro-Tip: The "Log Watch"
-
-If you want to watch the "police" in action while you perform the attack, run this command on your server before you start Step 2:
-`sudo tail -f /var/log/fail2ban.log`
-
-You will see a line like `[sshd] Ban 100.81.83.86` appear in real-time. It’s a very satisfying feeling for a new SysAdmin!
